@@ -4,48 +4,48 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.yourcompany.retail</groupId>
-    <artifactId>KafkaCdcProducer</artifactId>
+    <artifactId>KafkaCdcProducerSpring</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Kafka CDC Producer</name>
-    <description>A simple Kafka CDC Producer with Avro serialization.</description>
+    <name>Kafka CDC Producer Spring</name>
+    <description>A simple Kafka CDC Producer with Avro serialization using Spring Kafka.</description>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <kafka.version>3.0.0</kafka.version>
-        <confluent.version>7.0.1</confluent.version>
+        <java.version>17</java.version>
+        <spring.boot.version>2.7.0</spring.boot.version>
     </properties>
 
     <dependencies>
-        <!-- Kafka Clients -->
+        <!-- Spring Boot Starter -->
         <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>${kafka.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring.boot.version}</version>
         </dependency>
 
-        <!-- Avro Serialization -->
+        <!-- Spring Kafka -->
         <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-            <version>1.10.2</version>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>${spring.boot.version}</version>
         </dependency>
 
-        <!-- Confluent Kafka Avro Serializer -->
-        <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-avro-serializer</artifactId>
-            <version>${confluent.version}</version>
-        </dependency>
+        <!-- Confluent Schema Registry and Avro -->
+        <!-- Spring Cloud Stream Avro Support -->
+         <dependency>
+             <groupId>org.springframework.cloud</groupId>
+             <artifactId>spring-cloud-stream-schema</artifactId>
+             <version>3.2.0</version>
+         </dependency>
+         
+         <!-- Spring Cloud Schema Registry -->
+         <dependency>
+             <groupId>org.springframework.cloud</groupId>
+             <artifactId>spring-cloud-stream-schema-registry-client</artifactId>
+             <version>3.2.0</version>
+         </dependency>
 
-        <!-- Confluent Schema Registry Client -->
-        <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-schema-registry-client</artifactId>
-            <version>${confluent.version}</version>
-        </dependency>
 
         <!-- Faker for generating fake data -->
         <dependency>
@@ -54,38 +54,20 @@
             <version>1.0.2</version>
         </dependency>
 
-        <!-- SLF4J API for logging -->
+        <!-- Spring Boot Test -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.30</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring.boot.version}</version>
+            <scope>test</scope>
         </dependency>
-
-        <!-- Log4j2 for logging implementation -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.14.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.14.1</version>
-        </dependency>
-
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Maven Compiler Plugin -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
