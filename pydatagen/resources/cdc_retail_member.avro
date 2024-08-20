@@ -1,0 +1,69 @@
+{
+  "fields": [
+    {
+      "arg.properties": {
+        "regex": "^[A-Za-z0-9]+$"
+      },
+      "doc": "Unique identifier for the retail member",
+      "name": "member_id",
+      "type": "string"
+    },
+    {
+      "arg.properties": {
+        "regex": "^[A-Za-z ,.'-]+$"
+      },
+      "doc": "Full name of the retail member",
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "arg.properties": {
+        "regex": "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
+      },
+      "doc": "Email address of the retail member",
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "arg.properties": {
+        "regex": "^[0-9]{10,15}$"
+      },
+      "doc": "Phone number of the retail member",
+      "name": "phone",
+      "type": "string"
+    },
+    {
+      "arg.properties": {
+        "regex": "^[A-Za-z0-9 ,.-]+$"
+      },
+      "doc": "Mailing address of the retail member",
+      "name": "address",
+      "type": "string"
+    },
+    {
+      "arg.properties": {
+        "regex": "^(INSERT|UPDATE|DELETE)$"
+      },
+      "doc": "Type of operation",
+      "name": "operation",
+      "type": "string"
+    },
+    {
+      "doc": "Timestamp of the change event",
+      "name": "ts",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis",
+        "arg.properties": {
+          "iteration": {
+            "start": 1609459200000,
+            "step": 100
+           }
+        }
+      }
+    }
+  ],
+  "name": "CdcRetailMember",
+  "namespace": "com.yourcompany.retail",
+  "type": "record"
+}

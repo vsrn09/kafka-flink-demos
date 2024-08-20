@@ -1,0 +1,91 @@
+{
+  "namespace": "markov-demo",
+  "name": "users-order",
+  "type": "record",
+  "fields": [
+    {
+        "name": "timestamp",
+        "type": {
+            "type": "long",
+            "logicalType": "timestamp-millis",
+            "arg.properties": {
+                "iteration": {
+                    "start": "now_ms",
+                    "step": "interval"
+                }
+            }
+        }
+    },
+    {
+        "name": "user_id",
+        "type": {
+            "type": "string",
+            "arg.properties": {
+                "regex": "User_[0-9]{10}"
+            }
+        }
+    },
+    {
+        "name": "order_id",
+        "type": {
+            "type": "string",
+            "arg.properties": {
+                "regex": "[a-zA-Z0-9]{10}"
+            }
+        }
+    },
+    {
+      "name": "item_type",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "options": [
+            "boots",
+            "shirt",
+            "knife",
+            "saucepan",
+            "table",
+            "chair",
+            "clock",
+            "frame",
+            "guitar",
+            "thermometer",
+            "scarf",
+            "doormat",
+            "vase",
+            "clippers",
+            "game",
+            "towels"
+          ]
+        }
+      }
+    },
+    {
+      "name": "quantity",
+      "type": {
+        "type": "long",
+        "arg.properties": {
+          "range": {
+            "min": 1,
+            "max": 10
+          }
+        }
+      }
+    },
+    {
+      "name": "price_per_unit",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 4,
+        "scale": 2,
+        "arg.properties": {
+          "range": {
+            "min": 10.00,
+            "max": 50.00
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "fields": [
+    {
+      "arg.properties": {
+        "regex": "[A-Za-z0-9]+"
+      },
+      "doc": "Unique identifier for the retail member",
+      "name": "member_id",
+      "type": "string"
+    },
+    {
+      "doc": "Full name of the retail member",
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "arg.properties": {
+        "regex": "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
+      },
+      "doc": "Email address of the retail member",
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "doc": "Phone number of the retail member",
+      "name": "phone",
+      "type": "string"
+    },
+    {
+      "doc": "Mailing address of the retail member",
+      "name": "address",
+      "type": "string"
+    },
+    {
+      "name": "operation",
+      "type": "string",
+      "arg.properties": {
+         "options": [
+      	   "INSERT",
+           "UPDATE",
+           "DELETE"
+        ]
+      }
+    },
+    {
+      "doc": "Timestamp of the change event",
+      "name": "ts",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ],
+  "name": "CdcRetailMember",
+  "namespace": "com.yourcompany.retail",
+  "type": "record"
+}

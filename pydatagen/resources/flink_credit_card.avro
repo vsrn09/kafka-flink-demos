@@ -1,0 +1,65 @@
+{
+    "namespace": "flink.credit_card",
+    "name": "credit_card",
+    "type": "record",
+    "fields": [
+        {
+            "name": "timestamp",
+            "type": {
+                "type": "long",
+                "logicalType": "timestamp-millis",
+                "arg.properties": {
+                    "iteration": {
+                        "start": "now_ms",
+                        "step": "interval"
+                    }
+                }
+            }
+        },
+        {
+            "name": "user_id",
+            "type": {
+                "type": "string",
+                "arg.properties": {
+                    "regex": "User_[0-9]"
+                }
+            }
+        },
+        {
+            "name": "amount",
+            "type": {
+                "type": "double",
+                "logicalType": "decimal",
+                "precision": 5,
+                "scale": 2,
+                "arg.properties": {
+                    "range": {
+                        "min": 100.00,
+                        "max": 999.99
+                    }
+                }
+            }
+        },
+        {
+            "name": "transaction_id",
+            "type": {
+                "type": "long",
+                "arg.properties": {
+                    "iteration": {
+                        "start": "1",
+                        "step": "1"
+                    }
+                }
+            }
+        },
+        {
+            "name": "credit_card_number",
+            "type": {
+                "type": "string",
+                "arg.properties": {
+                    "regex": "\\*\\*\\*\\*\\-\\*\\*\\*\\*\\-\\*\\*\\*\\*\\-[0-9]{4}"
+                }
+            }
+        }
+    ]
+}

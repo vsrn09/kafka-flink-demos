@@ -1,0 +1,49 @@
+{
+  "type": "record",
+  "name": "CdcRetailMember",
+  "namespace": "com.yourcompany.retail",
+  "fields": [
+    {
+      "name": "member_id",
+      "type": "string",
+      "doc": "Unique identifier for the member."
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of the member."
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "doc": "Email address of the member."
+    },
+    {
+      "name": "phone",
+      "type": "string",
+      "doc": "Phone number of the member."
+    },
+    {
+      "name": "address",
+      "type": "string",
+      "doc": "Postal address of the member."
+    },
+    {
+      "name": "operation",
+      "type": {
+        "type": "enum",
+        "name": "OperationType",
+        "symbols": ["INSERT", "UPDATE", "DELETE"]
+      },
+      "doc": "Type of CDC operation: INSERT, UPDATE, or DELETE."
+    },
+    {
+      "name": "ts",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp of the CDC event."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+FROM flink:1.20-scala_2.12-java11
+
+# Install required libraries
+RUN apt-get update && \
+    apt-get install -y libstdc++6 locales dos2unix && \
+    locale-gen en_US.UTF-8 && \
+    update-locale LANG=en_US.UTF-8
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+# Add Flink dependencies
+ADD https://github.com/knaufk/flink-faker/releases/download/v0.5.1/flink-faker-0.5.1.jar /opt/flink/lib/
+ADD https://repo1.maven.org/maven2/org/apache/flink/flink-connector-kafka/3.2.0-1.19/flink-connector-kafka-3.2.0-1.19.jar /opt/flink/lib/
+ADD https://repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.8.0/kafka-clients-3.8.0.jar /opt/flink/lib/
+ADD https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-avro-confluent-registry/1.20.0/flink-sql-avro-confluent-registry-1.20.0.jar /opt/flink/lib/
+ADD https://repo1.maven.org/maven2/org/apache/flink/flink-s3-fs-hadoop/1.20.0/flink-s3-fs-hadoop-1.20.0.jar /opt/flink/lib/
+ADD https://repo1.maven.org/maven2/org/apache/flink/flink-table-store-dist/0.2.1/flink-table-store-dist-0.2.1.jar /opt/flink/lib/
+ADD https://repo.maven.apache.org/maven2/org/apache/flink/flink-shaded-hadoop-2-uber/2.8.3-10.0/flink-shaded-hadoop-2-uber-2.8.3-10.0.jar /opt/flink/lib/
+
+# Add Flink HTTP connector
+ADD https://repo1.maven.org/maven2/com/getindata/flink-http-connector/0.15.0/flink-http-connector-0.15.0.jar /opt/flink/lib/
+
+# The Flink image expects dependencies to be owned by the flink user
+RUN chown -R flink:flink /opt/flink/lib/
+
+# Add Kafka binaries so we can pre-create topics
+RUN mkdir /opt/kafka
+ADD https://downloads.apache.org/kafka/3.8.0/kafka_2.12-3.8.0.tgz /tmp/
+RUN tar -xf /tmp/kafka*.tgz -C /opt/kafka --strip-components 1 && rm /tmp/kafka*.tgz
+
+# Copy the custom entrypoint script
+COPY entrypoint_flink.sh /usr/local/bin/entrypoint_flink.sh
+RUN dos2unix /usr/local/bin/entrypoint_flink.sh
+RUN chmod +x /usr/local/bin/entrypoint_flink.sh
+
+# Set the custom entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint_flink.sh"]

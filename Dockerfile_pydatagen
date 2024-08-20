@@ -1,0 +1,22 @@
+#FROM alpine:3.17
+FROM python:3.10-alpine
+
+
+# Set the working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apk update && \
+    apk add --no-cache alpine-sdk git python3 py3-pip python3-dev gcc libc-dev bash zlib-dev curl librdkafka-dev \
+    libffi-dev openssl-dev
+
+# Copy the local repository to the container
+COPY ./pydatagen /app/pydatagen
+
+# Upgrade pip and install Python dependencies
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install --no-cache-dir -r pydatagen/requirements.txt
+
+
+# You can add an entrypoint or CMD if needed
+# CMD ["python3", "pydatagen/your_script.py"]

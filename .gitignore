@@ -1,0 +1,13 @@
+_venv
+.vscode/
+.DS_Store
+docs/
+*.pyc
+*.log
+__pycache__/
+config/*
+!config/example.ini
+!config/localhost.ini
+demo*.sh
+_*.py
+_*.sh

@@ -1,0 +1,29 @@
+{
+    "namespace": "markov-demo",
+    "name": "users-deregister",
+    "type": "record",
+    "fields": [
+        {
+            "name": "timestamp",
+            "type": {
+                "type": "long",
+                "logicalType": "timestamp-millis",
+                "arg.properties": {
+                    "iteration": {
+                        "start": "now_ms",
+                        "step": "interval"
+                    }
+                }
+            }
+        },
+        {
+            "name": "user_id",
+            "type": {
+                "type": "string",
+                "arg.properties": {
+                    "regex": "User_[0-9]{10}"
+                }
+            }
+        }
+    ]
+}

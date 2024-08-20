@@ -1,0 +1,97 @@
+settings:
+  default_cycle:
+    min: 1000
+    max: 5000
+  default_key: user_id
+  destroy_session_idle_time: 25000
+
+nodes:
+  signup:
+    name: markov_users_signup.avro
+    topic: markov-demo-user-signup
+    startup_probability: 0.9
+  login:
+    name: markov_users_login.avro
+    topic: markov-demo-user-login
+  order:
+    name: markov_users_order.avro
+    key: order_id
+    topic: markov-demo-user-order
+  cancel:
+    name: markov_users_order_cancel.avro
+    key: order_id
+    topic: markov-demo-user-order-cancel
+  checkout:
+    name: markov_users_checkout.avro
+    topic: markov-demo-user-checkout
+  logout:
+    name: markov_users_logout.avro
+    topic: markov-demo-user-logout
+  deregister:
+    name: markov_users_deregister.avro
+    topic: markov-demo-user-deregister
+
+relationships:
+  signup:
+    login:
+      parent_key: user_id
+      probability: 0.75
+    deregister:
+      parent_key: user_id
+      probability: 0.01
+    _null:
+      probability: *
+    _cycle:
+      min: 1500
+      max: 5500
+  login:
+    order:
+      parent_key: user_id
+      probability: 0.25
+    logout:
+      parent_key: user_id
+      probability: 0.50
+    deregister:
+      parent_key: user_id
+      probability: 0.01
+    _null:
+      probability: *
+    _cycle:
+      min: 2000
+      max: 8000
+  order:
+    login:
+      parent_key: user_id
+      probability: 0.15
+    cancel:
+      parent_key: order_id
+      probability: 0.02
+    checkout:
+      parent_key: user_id
+      probability: 0.65
+    logout:
+      parent_key: user_id
+      probability: 0.05
+  cancel:
+    order:
+      parent_key: user_id
+      probability: 0.15
+    checkout:
+      parent_key: user_id
+      probability: 0.45
+    logout:
+      key: user_id
+      probability: *
+  checkout:
+    order:
+      parent_key: user_id
+      probability: 0.05
+    logout:
+      key: user_id
+      probability: *
+  logout:
+    login:
+      parent_key: user_id
+      probability: 0.75
+    _null:
+      probability: *

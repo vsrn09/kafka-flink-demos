@@ -1,0 +1,62 @@
+{
+    "type": "record",
+    "namespace": "users",
+    "name": "users_behavior",
+    "fields": [
+        {
+            "name": "user_id",
+            "type": {
+                "type": "string",
+                "arg.properties": {
+                    "regex": "[1-9]{6}"
+                }
+            }
+        },
+        {
+            "name": "item_id",
+            "type": {
+                "type": "string",
+                "arg.properties": {
+                    "regex": "[1-9]{7}"
+                }
+            }
+        },
+        {
+            "name": "category_id",
+            "type": {
+                "type": "string",
+                "arg.properties": {
+                    "regex": "[1-9]{7}"
+                }
+            }
+        },
+        {
+            "name": "behavior",
+            "type": {
+                "type": "string",
+                "arg.properties": {
+                    "options": [
+                        "click",
+                        "order",
+                        "cancel",
+                        "login",
+                        "logout"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "ts",
+            "type": {
+                "type": "long",
+                "logicalType": "timestamp-millis",
+                "arg.properties": {
+                    "iteration": {
+                        "start": 1609459200000,
+                        "step": 100
+                    }
+                }
+            }
+        }
+    ]
+}

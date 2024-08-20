@@ -1,0 +1,101 @@
+{
+    "namespace": "flink.users",
+    "name": "users",
+    "type": "record",
+    "fields": [
+        {
+            "name": "timestamp",
+            "type": {
+                "type": "long",
+                "logicalType": "timestamp-millis",
+                "arg.properties": {
+                    "iteration": {
+                        "start": "now_ms",
+                        "step": "interval"
+                    }
+                }
+            }
+        },
+        {
+            "name": "user_id",
+            "type": {
+                "type": "string",
+                "arg.properties": {
+                    "regex": "User_[0-9]"
+                }
+            }
+        },
+        {
+            "name": "first_name",
+            "type": {
+                "type": "string",
+                "arg.properties": {
+                    "options": [
+                        "Rica",
+                        "Ruthie",
+                        "Mariejeanne",
+                        "Hashim",
+                        "Hansiain",
+                        "Robinet",
+                        "Fay",
+                        "Patti",
+                        "Even",
+                        "Brena",
+                        "Alexandro",
+                        "Sheryl",
+                        "Laney",
+                        "Isabelita",
+                        "Rodrique",
+                        "Clair",
+                        "Brianna",
+                        "Waldon",
+                        "Josiah",
+                        "Anselma"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "last_name",
+            "type": {
+                "type": "string",
+                "arg.properties": {
+                    "options": [
+                        "Blaisdell",
+                        "Brockherst",
+                        "Cocci",
+                        "Rumke",
+                        "Coda",
+                        "Leheude",
+                        "Huc",
+                        "Rosten",
+                        "Tinham",
+                        "Tollerton",
+                        "Peeke-Vout",
+                        "Hackwell",
+                        "Toopin",
+                        "Talboy",
+                        "Silverton",
+                        "Vardy",
+                        "Paradise",
+                        "Keddey",
+                        "Brockett",
+                        "Rook"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "avg_credit_spend",
+            "type": {
+                "type": "double",
+                "arg.properties": {
+                    "range": {
+                        "min": 1000,
+                        "max": 9999
+                    }
+                }
+            }
+        }
+    ]
+}
