@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    stream:
+      schemaRegistryClient:
+        endpoint: http://localhost:8990
+      bindings:
+        output:
+          destination: cdc_retail_member
+          contentType: application/*+avro
