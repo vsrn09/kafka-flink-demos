@@ -134,3 +134,249 @@ CREATE TABLE kafka_debug_table (
 	'properties.group.id' = 'flink_debug_group',
     'format' = 'json'
 );
+
+
+
+
+CREATE TABLE createRmMember_Flink (
+    `member` ROW< 
+        `backupWithholdingCode` STRING,
+        `branchOfService` STRING,
+        `currencyCode` STRING,
+        `easodt` STRING,
+        `employment` ROW< 
+            `annualIncome` STRING,
+            `contactHistory` ROW< 
+                `emailAddresses` ARRAY<ROW<`emailAddress` STRING>>,
+                `phoneNumbers` ARRAY<ROW<`phoneNumber` STRING>>,
+                `postalAddresses` ARRAY<ROW<`addressLine1` STRING, `city` STRING, `state` STRING, `zipCode` STRING, `countryCode` STRING>>
+            >,
+            `employerName` STRING,
+            `employmentEndDate` STRING,
+            `employmentStartDate` STRING,
+            `jobTitle` STRING,
+            `occupation` STRING
+        >,
+        `empStatus` STRING,
+        `issuedIdentifications` ARRAY<ROW<`idDescription` STRING, `idNumber` STRING, `idType` STRING>>,
+        `language` STRING,
+        `lastContactDate` STRING,
+        `membershipStatus` STRING,
+        `membershipSubType` STRING,
+        `membershipType` STRING,
+        `personData` ROW< 
+            `bankRegion` STRING,
+            `dateOfBirth` STRING,
+            `fullName` STRING,
+            `gender` STRING,
+            `givenName` STRING,
+            `familyName` STRING,
+            `prefix` STRING
+        >,
+        `preferredBank` STRING,
+        `relationshipManagers` ARRAY<ROW<`relationshipId` STRING, `relationshipRole` STRING>>
+    >,
+    `NECURARequestHeader` ROW<`consumerChannel` STRING, `consumingApplicationName` STRING, `credential` STRING, `rqUID` STRING>,
+    `lastUpdateDate` TIMESTAMP(3),
+    `event_time` AS `lastUpdateDate`,  -- Directly use the timestamp field
+    WATERMARK FOR `event_time` AS `event_time` - INTERVAL '1' SECOND -- Reduced watermark delay
+) WITH (
+    'connector' = 'kafka',
+    'topic' = 'createRmMember',
+    'properties.bootstrap.servers' = 'broker:9094',
+	'properties.group.id' = 'flink_create_member_grp',
+	--'key.fields' = 'member_id',
+	'properties.request.timeout.ms' = '60000',
+	'properties.retry.backoff.ms' = '1000',
+    --'key.format' = 'raw',
+    'format' = 'json',
+    'scan.startup.mode' = 'earliest-offset'
+);
+
+CREATE TABLE transformRmMemberCreate_Flink (
+    `applicationNumber` STRING,
+    `applicationPriority` STRING,
+    `businessProductCode` STRING,
+    `cmcReplicationReq` BOOLEAN,
+    `hostHandoffReq` BOOLEAN,
+    `kycReferenceNumber` STRING,
+    `notificationReq` BOOLEAN,
+    `partyType` STRING,
+    `retailPartyModel` ARRAY<ROW< 
+        `basicInfoAndCitizenshipDetails` ROW<
+            `applicationNumber` STRING,
+            `countryOfResidence` STRING,
+            `dateOfBirth` STRING,
+            `firstName` STRING,
+            `isCustomer` BOOLEAN,
+            `language` STRING,
+            `lastName` STRING,
+            `nationality` STRING,
+            `partySubType` STRING,
+            `partyType` STRING,
+            `residencyStatus` STRING,
+            `title` STRING
+        >,
+        `contactDetails` ROW<
+            `partyContactDetailsList` ARRAY<ROW<
+                `line1` STRING,
+                `mediaType` STRING,
+                `preferred` BOOLEAN
+            >>
+        >,
+        `currentAddressDetails` ROW<
+            `partyContactDetailsList` ARRAY<ROW<
+                `addressFrom` STRING,
+                `addressType` STRING,
+                `buildingName` STRING,
+                `city` STRING,
+                `country` STRING,
+                `currentAddress` BOOLEAN,
+                `location` STRING,
+                `preferred` BOOLEAN,
+                `state` STRING,
+                `streetName` STRING,
+                `zipCode` STRING
+            >>
+        >,
+        `externalRefNo` STRING,
+        `idDetails` ROW<
+            `partyIdInfoDetailsList` ARRAY<ROW<
+                `idStatus` STRING,
+                `idType` STRING,
+                `placeOfIssue` STRING,
+                `preferred` BOOLEAN,
+                `remarks` STRING,
+                `uniqueId` STRING,
+                `validFrom` STRING,
+                `validTill` STRING
+            >>
+        >,
+        `taxDeclarationDetails` ROW<
+            `asOnDate` STRING,
+            `partyTaxInfoDetailsList` ARRAY<ROW<
+                `formType` STRING,
+                `remarks` STRING,
+                `validFrom` STRING
+            >>
+        >
+    >>,
+    `sourceProductId` STRING,
+    `validationReq` BOOLEAN
+) WITH (
+    'connector' = 'kafka',
+    'topic' = 'transformRmMemberCreate',
+    'properties.bootstrap.servers' = 'broker:9094',
+    'properties.group.id' = 'flink_transform_create_member_grp',
+	'properties.request.timeout.ms' = '60000',
+	'properties.retry.backoff.ms' = '1000',
+    'format' = 'json',
+	'scan.startup.mode' = 'earliest-offset'
+);
+
+
+
+INSERT INTO transformRmMemberCreate_Flink
+SELECT 
+    mi.applicationNumber,
+    'Normal' AS applicationPriority,
+    'REOB' AS businessProductCode,
+    TRUE AS cmcReplicationReq,
+    FALSE AS hostHandoffReq,
+    'string' AS kycReferenceNumber,
+    TRUE AS notificationReq,
+    'I' AS partyType,
+    ARRAY[
+        ROW(
+            ROW(
+                mi.applicationNumber,
+                'US',
+                mi.member.personData.dateOfBirth,
+                mi.member.personData.givenName,
+                TRUE,
+                mi.member.language,
+                mi.member.personData.familyName,
+                'US',
+                'INDIVIDUAL',
+                'I',
+                'C',
+                mi.member.personData.prefix
+            ),
+            ROW(
+                ARRAY[
+                    ROW(
+                        mi.member.personData.contactHistory.emailAddresses[1].emailAddress,
+                        'EML',
+                        TRUE
+                    ),
+                    ROW(
+                        mi.member.personData.contactHistory.phoneNumbers[1].phoneNumber,
+                        'MBL',
+                        TRUE
+                    )
+                ]
+            ),
+            ROW(
+                ARRAY[
+                    ROW(
+                        '2015-01-30',
+                        'C',
+                        mi.member.employment.contactHistory.postalAddresses[1].addressLine1,
+                        mi.member.employment.contactHistory.postalAddresses[1].city,
+                        mi.member.employment.contactHistory.postalAddresses[1].countryCode,
+                        TRUE,
+                        'US',
+                        TRUE,
+                        mi.member.employment.contactHistory.postalAddresses[1].state,
+                        mi.member.employment.contactHistory.postalAddresses[1].addressLine2,
+                        mi.member.employment.contactHistory.postalAddresses[1].zipCode
+                    )
+                ]
+            ),
+            '00000000145999' AS externalRefNo,
+            ROW(
+                ARRAY[
+                    ROW(
+                        'AVL',
+                        'PPT',
+                        'LA',
+                        TRUE,
+                        'ID card is valid',
+                        'A234',
+                        '2002-01-30',
+                        '2031-01-30'
+                    )
+                ]
+            ),
+            ROW(
+                '2022-03-12',
+                ARRAY[
+                    ROW(
+                        'W9',
+                        'tax compliant',
+                        '2024-10-30'
+                    )
+                ]
+            )
+        )
+    ] AS retailPartyModel,
+    'OBPY' AS sourceProductId,
+    FALSE AS validationReq
+FROM createRmMember_Flink AS mi
+WINDOW HOP (`event_time`, INTERVAL '1' SECOND, INTERVAL '1' SECOND) -- Sliding window with 1 second interval
+GROUP BY 
+    mi.applicationNumber,
+    mi.member.personData.dateOfBirth,
+    mi.member.personData.givenName,
+    mi.member.language,
+    mi.member.personData.familyName,
+    mi.member.personData.prefix,
+    mi.member.personData.contactHistory.emailAddresses[1].emailAddress,
+    mi.member.personData.contactHistory.phoneNumbers[1].phoneNumber,
+    mi.member.employment.contactHistory.postalAddresses[1].addressLine1,
+    mi.member.employment.contactHistory.postalAddresses[1].city,
+    mi.member.employment.contactHistory.postalAddresses[1].countryCode,
+    mi.member.employment.contactHistory.postalAddresses[1].state,
+    mi.member.employment.contactHistory.postalAddresses[1].addressLine2,
+    mi.member.employment.contactHistory.postalAddresses[1].zipCode,
+    mi.member.language;
