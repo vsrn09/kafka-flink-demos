@@ -1,0 +1,618 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "member": {
+            "properties": {
+                "backupWithholdingCode": {
+                    "type": "string"
+                },
+                "branchOfService": {
+                    "type": "string"
+                },
+                "currencyCode": {
+                    "type": "string"
+                },
+                "easodt": {
+                    "type": "string"
+                },
+                "employment": {
+                    "properties": {
+                        "annualIncome": {
+                            "type": "string"
+                        },
+                        "contactHistory": {
+                            "properties": {
+                                "emailAddresses": {
+                                    "items": {
+                                        "properties": {
+                                            "contactMiscData": {
+                                                "items": {
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string"
+                                                        },
+                                                        "value": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "type",
+                                                        "value"
+                                                    ],
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "emailAddress": {
+                                                "type": "string"
+                                            },
+                                            "emailType": {
+                                                "type": "string"
+                                            },
+                                            "preferredInd": {
+                                                "type": "string"
+                                            },
+                                            "solicitCode": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "emailAddress",
+                                            "emailType",
+                                            "preferredInd",
+                                            "solicitCode"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "phoneNumbers": {
+                                    "items": {
+                                        "properties": {
+                                            "communicationId": {
+                                                "type": "string"
+                                            },
+                                            "contactMiscData": {
+                                                "items": {
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string"
+                                                        },
+                                                        "value": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "type",
+                                                        "value"
+                                                    ],
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "contactName": {
+                                                "type": "string"
+                                            },
+                                            "contactType": {
+                                                "type": "string"
+                                            },
+                                            "country": {
+                                                "type": "string"
+                                            },
+                                            "deactivationStatus": {
+                                                "type": "string"
+                                            },
+                                            "deactivationStatusDesc": {
+                                                "type": "string"
+                                            },
+                                            "extensionValidInfo": {
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "string"
+                                                    },
+                                                    "statusDesc": {
+                                                        "type": "string"
+                                                    },
+                                                    "statusModBy": {
+                                                        "type": "string"
+                                                    },
+                                                    "updateDate": {
+                                                        "type": "string"
+                                                    },
+                                                    "validatedPhoneType": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "statusCode",
+                                                    "statusDesc",
+                                                    "statusModBy",
+                                                    "updateDate",
+                                                    "validatedPhoneType"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "formattedPhoneNumber": {
+                                                "type": "string"
+                                            },
+                                            "lastUpdateDate": {
+                                                "type": "string"
+                                            },
+                                            "lastUpdateEmployeeId": {
+                                                "type": "string"
+                                            },
+                                            "memberVerificationInfo": {
+                                                "properties": {
+                                                    "channelCode": {
+                                                        "type": "string"
+                                                    },
+                                                    "statusCode": {
+                                                        "type": "string"
+                                                    },
+                                                    "statusDesc": {
+                                                        "type": "string"
+                                                    },
+                                                    "updateDate": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "channelCode",
+                                                    "statusCode",
+                                                    "statusDesc",
+                                                    "updateDate"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "phoneExtension": {
+                                                "type": "string"
+                                            },
+                                            "phoneNumber": {
+                                                "type": "string"
+                                            },
+                                            "phoneSeqNumber": {
+                                                "type": "string"
+                                            },
+                                            "phoneType": {
+                                                "type": "string"
+                                            },
+                                            "phoneTypeDesc": {
+                                                "type": "string"
+                                            },
+                                            "preferredInd": {
+                                                "type": "string"
+                                            },
+                                            "preferredTime": {
+                                                "type": "string"
+                                            },
+                                            "solicitCode": {
+                                                "type": "string"
+                                            },
+                                            "timeZone": {
+                                                "type": "string"
+                                            },
+                                            "usaInd": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "phoneNumber"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "postalAddresses": {
+                                    "items": {
+                                        "properties": {
+                                            "addressLine1": {
+                                                "type": "string"
+                                            },
+                                            "addressLine2": {
+                                                "type": "string"
+                                            },
+                                            "addressLine3": {
+                                                "type": "string"
+                                            },
+                                            "addressSourceCode": {
+                                                "type": "string"
+                                            },
+                                            "addressSubType": {
+                                                "type": "string"
+                                            },
+                                            "addressType": {
+                                                "type": "string"
+                                            },
+                                            "bypassAddressFormatInd": {
+                                                "type": "string"
+                                            },
+                                            "city": {
+                                                "type": "string"
+                                            },
+                                            "contactMiscData": {
+                                                "items": {
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string"
+                                                        },
+                                                        "value": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "type",
+                                                        "value"
+                                                    ],
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "countryCode": {
+                                                "type": "string"
+                                            },
+                                            "foreignAddressInd": {
+                                                "type": "string"
+                                            },
+                                            "mailCode": {
+                                                "type": "string"
+                                            },
+                                            "state": {
+                                                "type": "string"
+                                            },
+                                            "zipCode": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "addressLine1",
+                                            "city",
+                                            "state",
+                                            "zipCode"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "emailAddresses",
+                                "phoneNumbers",
+                                "postalAddresses"
+                            ],
+                            "type": "object"
+                        },
+                        "currencyCode": {
+                            "type": "string"
+                        },
+                        "employerName": {
+                            "type": "string"
+                        },
+                        "employmentEndDate": {
+                            "type": "string"
+                        },
+                        "employmentStartDate": {
+                            "type": "string"
+                        },
+                        "jobTitle": {
+                            "type": "string"
+                        },
+                        "occupation": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "annualIncome",
+                        "contactHistory",
+                        "employerName"
+                    ],
+                    "type": "object"
+                },
+                "empStatus": {
+                    "type": "string"
+                },
+                "financialData": {
+                    "items": {
+                        "properties": {
+                            "amount": {
+                                "type": "string"
+                            },
+                            "lastUpdateDate": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "amount",
+                            "type"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "internetBankingInd": {
+                    "type": "string"
+                },
+                "issuedIdentifications": {
+                    "items": {
+                        "properties": {
+                            "idDescription": {
+                                "type": "string"
+                            },
+                            "idExpirationDate": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "idIssueDate": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "idIssuerName": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "idNumber": {
+                                "type": "string"
+                            },
+                            "idType": {
+                                "type": "string"
+                            },
+                            "idVerifyDate": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "taxIdCertCode": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "taxIdCertDate": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "idDescription",
+                            "idNumber",
+                            "idType"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "lastContactDate": {
+                    "type": "string"
+                },
+                "membershipStatus": {
+                    "type": "string"
+                },
+                "membershipSubType": {
+                    "type": "string"
+                },
+                "membershipType": {
+                    "type": "string"
+                },
+                "miscData": {
+                    "items": {
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "value"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "numberOfChildren": {
+                    "type": "string"
+                },
+                "origin": {
+                    "type": "string"
+                },
+                "originatingBank": {
+                    "type": "string"
+                },
+                "originatingBranch": {
+                    "type": "string"
+                },
+                "payRate": {
+                    "type": "string"
+                },
+                "personData": {
+                    "properties": {
+                        "bankRegion": {
+                            "type": "string"
+                        },
+                        "contactHistory": {
+                            "type": "object"
+                        },
+                        "dateOfBirth": {
+                            "type": "string"
+                        },
+                        "dependents": {
+                            "type": "string"
+                        },
+                        "educationLevel": {
+                            "type": "string"
+                        },
+                        "familyName": {
+                            "type": "string"
+                        },
+                        "fullName": {
+                            "type": "string"
+                        },
+                        "gender": {
+                            "type": "string"
+                        },
+                        "givenName": {
+                            "type": "string"
+                        },
+                        "homeOwnershipCode": {
+                            "type": "string"
+                        },
+                        "immigrationStatus": {
+                            "type": "string"
+                        },
+                        "maritalStatus": {
+                            "type": "string"
+                        },
+                        "middleName": {
+                            "type": "string"
+                        },
+                        "militaryRank": {
+                            "type": "string"
+                        },
+                        "mothersMaidenName": {
+                            "type": "string"
+                        },
+                        "nationality": {
+                            "type": "string"
+                        },
+                        "oEDCode": {
+                            "type": "string"
+                        },
+                        "oEDInstitution": {
+                            "type": "string"
+                        },
+                        "preferredName": {
+                            "type": "string"
+                        },
+                        "prefix": {
+                            "type": "string"
+                        },
+                        "spouseName": {
+                            "type": "string"
+                        },
+                        "suffix": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "fullName",
+                        "dateOfBirth",
+                        "gender"
+                    ],
+                    "type": "object"
+                },
+                "preferredBank": {
+                    "type": "string"
+                },
+                "preferredBranch": {
+                    "type": "string"
+                },
+                "relationshipManagers": {
+                    "items": {
+                        "properties": {
+                            "relationshipId": {
+                                "type": "string"
+                            },
+                            "relationshipRole": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "relationshipId",
+                            "relationshipRole"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "responsibleBank": {
+                    "type": "string"
+                },
+                "responsibleBranch": {
+                    "type": "string"
+                },
+                "selfEmployedInd": {
+                    "type": "string"
+                },
+                "serviceLevel": {
+                    "type": "string"
+                },
+                "shareInformationCode": {
+                    "type": "string"
+                },
+                "sponsorRel": {
+                    "type": "string"
+                },
+                "spouseDateOfBirth": {
+                    "type": "string"
+                },
+                "spouseTIN": {
+                    "type": "string"
+                },
+                "spouseTINCode": {
+                    "type": "string"
+                },
+                "taxResidencyCountryCode": {
+                    "type": "string"
+                },
+                "w8CertificationCode": {
+                    "type": "string"
+                },
+                "w8CertificationDate": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "backupWithholdingCode",
+                "branchOfService",
+                "employment",
+                "personData"
+            ],
+            "type": "object"
+        },
+        "NECURARequestHeader": {
+            "properties": {
+                "consumerChannel": {
+                    "type": "string"
+                },
+                "consumingApplicationName": {
+                    "type": "string"
+                },
+                "credential": {
+                    "type": "string"
+                },
+                "rqUID": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "consumerChannel",
+                "consumingApplicationName",
+                "credential",
+                "rqUID"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "member",
+        "NECURARequestHeader"
+    ],
+    "title": "MemberRecord",
+    "type": "object"
+}
